@@ -8,8 +8,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import java.util.stream.Stream;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
@@ -34,15 +34,18 @@ public class MovieCell extends ListCell<Movie> {
             );
 
             genre.setText(
-                    movie.getGenresList()!= null
-                            ? String.valueOf(movie.getGenresList())
+                    movie.getGenres()!= null
+                            ? String.valueOf(movie.getGenres())
                             : "No Genre Available"
             );
+            genre.setFont(Font.font("Calibri", FontPosture.ITALIC, 14));;
 
             // color scheme
             title.getStyleClass().add("text-yellow");
             detail.getStyleClass().add("text-white");
             genre.getStyleClass().add("text-white");
+
+
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
             // layout

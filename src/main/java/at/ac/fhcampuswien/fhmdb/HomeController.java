@@ -19,7 +19,6 @@ import java.util.*;
 public class HomeController implements Initializable {
     @FXML
     public JFXButton searchBtn;
-
     @FXML
     public JFXButton noFilterBtn;
     @FXML
@@ -33,7 +32,6 @@ public class HomeController implements Initializable {
     public List<Movie> allMovies = Movie.initializeMovies();
     final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();// automatically updates corresponding UI elements when underlying data changes
 
-
     public void initializeState() {
         observableMovies.clear();
         observableMovies.addAll(allMovies);
@@ -43,13 +41,6 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //TEST IN CONSOLE
-       /* System.out.println("Genres of first Movie: " + allMovies.get(0).getGenresList());
-        System.out.println("First Movie first Genre in List: " + allMovies.get(0).getGenresList().get(0));*/
-
-
-        //TEST IN CONSOLE
-
         observableMovies.addAll(allMovies);// add dummy data to observable list
         sortMovies();
 
@@ -58,11 +49,6 @@ public class HomeController implements Initializable {
         movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().addAll(Genre.values()); //Add ENUM Values to Combo Box
-
-
-        // TODO add event handlers to buttons and call the regarding methods
-        // either set event handlers in the fxml file (onAction) or add them here
-
 
         searchBtn.setOnAction(actionEvent -> {
             filterMovies();
@@ -77,14 +63,12 @@ public class HomeController implements Initializable {
         });
 
         searchField.setOnAction(actionEvent -> {
-           filterMovies();
+            filterMovies();
         });
-
     }
 
-
-
     ObservableList<Movie> movieList = FXCollections.observableArrayList();
+
 
     public void filterMovies() {
 
@@ -99,8 +83,8 @@ public class HomeController implements Initializable {
         } else if (searchField.getText().equals("") && genreComboBox.getValue() != null) { //Filter by Genre
             movieList.clear();
             for (int i = 0; i < observableMovies.size(); i++) {
-                for (int j = 0; j < observableMovies.get(i).getGenresList().size(); j++) {
-                    if (observableMovies.get(i).getGenresList().get(j).equals(genreComboBox.getValue())) {
+                for (int j = 0; j < observableMovies.get(i).getGenres().size(); j++) {
+                    if (observableMovies.get(i).getGenres().get(j).equals(genreComboBox.getValue())) {
                         movieList.add(observableMovies.get(i));
                     }
                 }
@@ -122,10 +106,10 @@ public class HomeController implements Initializable {
         } else if (!searchField.getText().equals("") && genreComboBox.getValue() != null) { //Filter by both
             movieList.clear();
             for (int i = 0; i < observableMovies.size(); i++) {
-                for (int j = 0; j < observableMovies.get(i).getGenresList().size(); j++) {
-                    if (observableMovies.get(i).getGenresList().get(j).equals(genreComboBox.getValue()) &&
+                for (int j = 0; j < observableMovies.get(i).getGenres().size(); j++) {
+                    if (observableMovies.get(i).getGenres().get(j).equals(genreComboBox.getValue()) &&
                             (observableMovies.get(i).getTitle().toUpperCase().contains(searchField.getText().toUpperCase()) ||
-                            observableMovies.get(i).getDescription().toUpperCase().contains(searchField.getText().toUpperCase()))
+                                    observableMovies.get(i).getDescription().toUpperCase().contains(searchField.getText().toUpperCase()))
                     ) {
                         movieList.add(observableMovies.get(i));
                     }
@@ -142,21 +126,17 @@ public class HomeController implements Initializable {
         movieListView.setItems(observableMovies);
     }
 
-
     public void sortMovies() {
-
-            if (sortBtn.getText().equals("Sort (asc)")) {
-                movieList.sort(Comparator.comparing(movie -> movie.getTitle()));
-                observableMovies.sort(Comparator.comparing(movie -> movie.getTitle()));
-
-                sortBtn.setText("Sort (desc)");
-            } else if (sortBtn.getText().equals("Sort (desc)")) {
-                movieList.sort(Comparator.comparing(Movie::getTitle).reversed());
-                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
-                sortBtn.setText("Sort (asc)");
-            }
+        if (sortBtn.getText().equals("Sort (asc)")) {
+            movieList.sort(Comparator.comparing(movie -> movie.getTitle()));
+            observableMovies.sort(Comparator.comparing(movie -> movie.getTitle()));
+            sortBtn.setText("Sort (desc)");
+        } else if (sortBtn.getText().equals("Sort (desc)")) {
+            movieList.sort(Comparator.comparing(Movie::getTitle).reversed());
+            observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+            sortBtn.setText("Sort (asc)");
+        }
     }
-
 }
 
 

@@ -1,22 +1,17 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import at.ac.fhcampuswien.fhmdb.HomeController;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Movie {
     private String title;
     private String description;
-
     static List<Genre> genres = new ArrayList<>();
-
     List<Genre> genre;
 
-
-    public Movie(String title, String description,  List<Genre> genre) {
+    public Movie(String title, String description, List<Genre> genre) {
         this.title = title;
         this.description = description;
         this.genre = genre;
@@ -30,15 +25,12 @@ public class Movie {
         return description;
     }
 
-
     public static List<Genre> getGenreList() {
-
         genres.addAll(List.of(Genre.values()));
         return genres;
     }
 
-
-    public List<Genre> getGenresList () {
+    public List<Genre> getGenres() {
         return genre;
     }
 
@@ -58,10 +50,6 @@ public class Movie {
         movies.add(movie4);
         movies.add(movie5);
 
-
         return movies;
-
     }
-
-
 }
