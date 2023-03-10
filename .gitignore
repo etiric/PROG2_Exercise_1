@@ -32,4 +32,7 @@ build/
 .vscode/
 
 ### Mac OS ###
-.DS_Store
+.DS_Storewords.txt
+Genres.java
+Genre.java
+Genre.java
