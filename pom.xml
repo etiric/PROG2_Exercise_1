@@ -44,6 +44,12 @@
             <artifactId>jfoenix</artifactId>
             <version>9.0.10</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-testng</artifactId>
+            <version>0.4.30</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
