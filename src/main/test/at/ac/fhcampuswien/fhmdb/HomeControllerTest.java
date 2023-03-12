@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -73,35 +74,27 @@ class HomeControllerTest {
 
     @Test
     void sort_movies_asc () {
-       /* homeController.initializeState();
-
        homeController.sortBtn.setText("Sort (asc)");
-        homeController.sortMovies();
-
-        assertEquals();*/
+       homeController.sortMovies();
+        List<Movie> expected = new ArrayList<>();
+        expected.addAll(homeController.observableMovies);
+        assertEquals(expected, homeController.movieListView);
     }
 
     @Test
     void sort_movies_desc() {
-
-        HomeController controller = new HomeController();
-
-
-        controller.sortBtn.setText("Sort (desc)");
-        controller.sortMovies();
-        List<Movie> expected;
+        homeController.sortBtn.setText("Sort (desc)");
+        homeController.sortMovies();
+        List<Movie> expected = new ArrayList<>();
+        expected.addAll(homeController.observableMovies);
+        assertEquals(expected, homeController.movieListView);
     }
 
     @Test
     void filter_movies_when_text_field_is_not_null() {
     List<Movie> movies = new ArrayList<>();
 
-
-        homeController.initializeState();
-        TextField textField = homeController.searchField;
-
-        textField.setText("X");
-
+        homeController.searchField.setText("X");
         homeController.filterMovies();
         movies.addAll(homeController.movieListView.getItems());
 
@@ -109,20 +102,19 @@ class HomeControllerTest {
         expected.add(homeController.observableMovies.get(4));
 
         assertEquals(expected, movies);
-
     }
 
     @Test
     void filter_movies_when_genreComboBox_is_not_null() {
         List<Movie> movies = new ArrayList<>();
         ComboBox comboBox = homeController.genreComboBox;
-        comboBox.setValue(Genre.ACTION);
+        comboBox.setValue(Genre.CRIME);
 
         homeController.filterMovies();
         movies.addAll(homeController.movieListView.getItems());
 
         List<Movie> expected = new ArrayList<>();
-        expected.add(homeController.observableMovies.get(4));
+        expected.add(homeController.observableMovies.get(1));
 
         assertEquals(expected, movies);
 
@@ -157,19 +149,17 @@ class HomeControllerTest {
         movies.addAll(homeController.movieListView.getItems());
 
         List<Movie> expected = new ArrayList<>();
-        expected.add(homeController.observableMovies.get(4));
+        expected.addAll(homeController.observableMovies);
 
         assertEquals(expected, movies);
     }
 
     @Test
-    void remove_filter_method_removes_both_filter() {
-        homeController.initializeState();
+    void test_if_remove_filter_method_removes_filter() {
         homeController.removeFilter();
         String expected = "";
 
         homeController.searchField.getText();
-        homeController.genreComboBox.getValue();
 
         assertEquals(expected, homeController.searchField.getText());
 
