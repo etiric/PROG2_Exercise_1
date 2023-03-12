@@ -85,7 +85,7 @@ class HomeControllerTest {
     void sort_movies_desc() {
 
         HomeController controller = new HomeController();
-        controller.initializeState();
+
 
         controller.sortBtn.setText("Sort (desc)");
         controller.sortMovies();
@@ -118,15 +118,48 @@ class HomeControllerTest {
         ComboBox comboBox = homeController.genreComboBox;
         comboBox.setValue(Genre.ACTION);
 
+        homeController.filterMovies();
+        movies.addAll(homeController.movieListView.getItems());
+
+        List<Movie> expected = new ArrayList<>();
+        expected.add(homeController.observableMovies.get(4));
+
+        assertEquals(expected, movies);
+
     }
 
     @Test
     void filter_movies_when_text_field_and_genreComboBox_are_not_null () {
+        List<Movie> movies = new ArrayList<>();
+        ComboBox comboBox = homeController.genreComboBox;
+        comboBox.setValue(Genre.ACTION);
+        TextField textField = homeController.searchField;
+        textField.setText("X");
 
+        homeController.filterMovies();
+        movies.addAll(homeController.movieListView.getItems());
+
+        List<Movie> expected = new ArrayList<>();
+        expected.add(homeController.observableMovies.get(4));
+
+        assertEquals(expected, movies);
     }
 
     @Test
     void filter_movies_when_text_field_and_genreComboBox_are_both_null () {
+        List<Movie> movies = new ArrayList<>();
+        ComboBox comboBox = homeController.genreComboBox;
+        comboBox.setValue(null);
+        TextField textField = homeController.searchField;
+        textField.setText(null);
+
+        homeController.filterMovies();
+        movies.addAll(homeController.movieListView.getItems());
+
+        List<Movie> expected = new ArrayList<>();
+        expected.add(homeController.observableMovies.get(4));
+
+        assertEquals(expected, movies);
     }
 
     @Test
