@@ -54,7 +54,6 @@ public class HomeController implements Initializable {
         });
 
         sortBtn.setOnAction(actionEvent -> {
-            sortBtn.setText("Sort (asc)");
             sortMovies();
         });
 
